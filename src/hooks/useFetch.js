@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 export const useFetch = (url) => {
 
@@ -7,27 +7,39 @@ export const useFetch = (url) => {
     loading: true, 
     error: null 
   };
+  const isMounted = useRef(true);
   const [state, setState] = useState(initialState);
   console.log('useFetch', state);
 
   useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    }
+  }, []);
+
+  useEffect(() => {
     
-    setState({ 
-      data: null, 
-      loading: true, 
-      error: null 
-    });
+    setState(initialState);
 
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
         console.log('useFetch','useEffect', data);
-        setState({
-          loading: false,
-          error: null,
-          //data: data
-          data
-        });
+
+        setTimeout(() => {
+          if (isMounted.current) {
+            setState({
+              loading: false,
+              error: null,
+              //data: data
+              data
+            });     
+          } else {
+            console.log('useFetch','setState no se llamó');
+          }
+                 
+        }, 4000);        
+
       })
 
   }, [url]);

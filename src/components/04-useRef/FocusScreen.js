@@ -3,7 +3,7 @@ import './FocusScreen.css';
 
 export const FocusScreen = () => {
   const inputRef =  useRef();
-  console.log('ref',ref);
+  console.log('ref',inputRef);
 
   const handleClickSinUseRef = () => {
     //document.querySelector('input').focus();
