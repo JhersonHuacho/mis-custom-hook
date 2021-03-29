@@ -5,6 +5,11 @@ export const useForm = (initialState = {}) => {
   //Podemos poner cualquier cantidad de lógica aquí en el customHook
   // Podemos pasarle otros argumentos que sean las reglas de validación, o que campos son obligatorios  
 
+  const reset = () => {
+    console.log('useForm', 'reset');
+    setValues(initialState);
+  }
+
   const handleInputChange = (e) => {
     // console.log(e.target);
     // console.log(e.target.type);
@@ -18,6 +23,6 @@ export const useForm = (initialState = {}) => {
 
   }
 
-  return [values, handleInputChange];
+  return [values, handleInputChange, reset];
 
 }
